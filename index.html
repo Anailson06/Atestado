@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clínica Vida+ Online — Atendimento Médico Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep: #1a3a5c;
+    --blue-mid: #2d6a9f;
+    --blue-light: #e8f1f9;
+    --blue-accent: #4a90c4;
+    --white: #ffffff;
+    --gray-50: #f8f9fa;
+    --gray-100: #f0f2f5;
+    --gray-300: #d0d5dd;
+    --gray-500: #667085;
+    --gray-700: #344054;
+    --gray-900: #101828;
+    --green-wa: #25d366;
+    --radius: 12px;
+    --radius-lg: 20px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.09), 0 4px 12px rgba(0,0,0,0.05);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    color: var(--gray-700);
+    background: var(--white);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* TYPOGRAPHY */
+  h1, h2, h3 { font-family: 'DM Serif Display', serif; color: var(--blue-deep); line-height: 1.2; }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); }
+  h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+  p { font-size: clamp(0.93rem, 1.5vw, 1.05rem); color: var(--gray-500); }
+
+  a { text-decoration: none; color: inherit; }
+
+  .container {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section { padding: 96px 0; }
+
+  /* FADE ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+
+  /* HEADER / NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: var(--transition);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--blue-deep);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-mark svg { width: 20px; height: 20px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--blue-deep);
+    letter-spacing: -0.01em;
+  }
+
+  .logo-text span { color: var(--blue-accent); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    transition: color var(--transition);
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links a:hover { color: var(--blue-mid); }
+
+  .nav-cta {
+    background: var(--blue-deep);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    transition: background var(--transition), transform var(--transition) !important;
+  }
+
+  .nav-cta:hover { background: var(--blue-mid) !important; transform: translateY(-1px); }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--gray-700);
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 72px;
+    background: linear-gradient(135deg, #f7fafd 0%, #eef4fb 60%, #e5eff8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,144,196,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,58,92,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(74,144,196,0.12);
+    border: 1px solid rgba(74,144,196,0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--blue-mid);
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--blue-accent);
+    border-radius: 50%;
+  }
+
+  .hero-title { margin-bottom: 20px; }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--blue-mid);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--gray-500);
+    margin-bottom: 40px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--blue-deep);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all var(--transition);
+    box-shadow: 0 4px 20px rgba(26,58,92,0.25);
+  }
+
+  .btn-primary:hover {
+    background: var(--blue-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(26,58,92,0.3);
+  }
+
+  .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+
+  .hero-note {
+    font-size: 0.82rem;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-note::before {
+    content: '';
+    width: 16px; height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234a90c4' stroke-width='2'%3E%3Cpath stroke-linecap='round' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+  }
+
+  .hero-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-img-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .hero-img-wrap img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+
+  .hero-stat-card {
+    position: absolute;
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-stat-card.card-1 { bottom: -20px; left: -20px; }
+  .hero-stat-card.card-2 { top: -20px; right: -20px; }
+
+  .stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .stat-icon.blue { background: var(--blue-light); }
+  .stat-icon svg { width: 20px; height: 20px; stroke: var(--blue-mid); fill: none; stroke-width: 1.8; stroke-linecap: round; }
+
+  .stat-text { font-size: 0.8rem; }
+  .stat-text strong { display: block; font-size: 1.1rem; color: var(--gray-900); font-weight: 600; }
+  .stat-text span { color: var(--gray-500); }
+
+  /* TRUST BAR */
+  .trust-bar {
+    padding: 28px 0;
+    border-top: 1px solid var(--gray-100);
+    border-bottom: 1px solid var(--gray-100);
+    background: white;
+  }
+
+  .trust-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+
+  .trust-item svg { width: 18px; height: 18px; stroke: var(--blue-accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  /* SECTION HEADERS */
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 12px;
+  }
+
+  .section-header { max-width: 600px; margin-bottom: 64px; }
+  .section-header.centered { text-align: center; margin-left: auto; margin-right: auto; }
+  .section-header p { margin-top: 16px; }
+
+  /* SOBRE */
+  #sobre { background: var(--white); }
+
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .sobre-img {
+    position: relative;
+  }
+
+  .sobre-img img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    display: block;
+  }
+
+  .sobre-img-accent {
+    position: absolute;
+    bottom: 32px;
+    right: -24px;
+    background: var(--blue-deep);
+    color: white;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    max-width: 200px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .sobre-img-accent strong {
+    display: block;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .sobre-img-accent span { font-size: 0.8rem; opacity: 0.8; margin-top: 4px; display: block; }
+
+  .sobre-content h2 { margin-bottom: 20px; }
+  .sobre-content p { margin-bottom: 16px; line-height: 1.75; }
+
+  .sobre-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .value-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+
+  .value-chip::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--blue-accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* COMO FUNCIONA */
+  #como-funciona { background: var(--gray-50); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    position: relative;
+  }
+
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 52px;
+    left: calc(16.6% + 26px);
+    right: calc(16.6% + 26px);
+    height: 1px;
+    background: linear-gradient(to right, var(--blue-accent), var(--blue-accent));
+    opacity: 0.3;
+  }
+
+  .step-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 36px 28px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-100);
+    text-align: center;
+    position: relative;
+    transition: box-shadow var(--transition), transform var(--transition);
+  }
+
+  .step-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .step-number {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px; height: 32px;
+    background: var(--blue-deep);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-icon {
+    width: 64px; height: 64px;
+    background: var(--blue-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px auto 24px;
+  }
+
+  .step-icon svg { width: 28px; height: 28px; stroke: var(--blue-mid); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .step-card h3 { margin-bottom: 12px; font-size: 1.15rem; }
+
+  /* ATENDIMENTO MÉDICO */
+  #atendimento {
+    background: var(--blue-deep);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #atendimento::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  #atendimento h2, #atendimento h3 { color: white; }
+  #atendimento p { color: rgba(255,255,255,0.72); }
+  #atendimento .section-label { color: rgba(255,255,255,0.5); }
+
+  .atendimento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .atendimento-content { max-width: 480px; }
+  .atendimento-content h2 { margin-bottom: 20px; }
+  .atendimento-content p { margin-bottom: 16px; line-height: 1.75; }
+
+  .atendimento-notice {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .notice-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .notice-text { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .notice-text strong { color: white; display: block; margin-bottom: 4px; }
+
+  .atendimento-img img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    display: block;
+  }
+
+  /* PRINCÍPIOS */
+  #principios { background: white; }
+
+  .principios-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .principio-card {
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 36px 24px;
+    text-align: center;
+    transition: all var(--transition);
+  }
+
+  .principio-card:hover {
+    border-color: var(--blue-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .principio-card:hover .principio-icon { background: var(--blue-deep); }
+  .principio-card:hover .principio-icon svg { stroke: white; }
+
+  .principio-icon {
+    width: 56px; height: 56px;
+    background: var(--blue-light);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    transition: background var(--transition);
+  }
+
+  .principio-icon svg { width: 24px; height: 24px; stroke: var(--blue-mid); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--transition); }
+
+  .principio-card h3 { margin-bottom: 10px; font-size: 1.05rem; }
+
+  /* DEPOIMENTOS */
+  #depoimentos { background: var(--gray-50); }
+
+  .depoimentos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .depoimento-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-100);
+    position: relative;
+  }
+
+  .depoimento-card::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    color: var(--blue-light);
+    position: absolute;
+    top: 12px; left: 24px;
+    line-height: 1;
+  }
+
+  .depoimento-text {
+    font-size: 1rem;
+    color: var(--gray-700);
+    line-height: 1.7;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .depoimento-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--gray-100);
+    padding-top: 20px;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--blue-mid);
+    font-weight: 600;
+  }
+
+  .author-info strong { display: block; font-size: 0.88rem; color: var(--gray-700); font-weight: 500; }
+  .author-info span { font-size: 0.78rem; color: var(--gray-500); }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .stars span { color: #f5a623; font-size: 0.85rem; }
+
+  /* CTA */
+  #cta {
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+    text-align: center;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  #cta h2 { color: white; margin-bottom: 16px; }
+  #cta p { color: rgba(255,255,255,0.7); margin-bottom: 40px; font-size: 1.1rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+  .btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: var(--blue-deep);
+    padding: 16px 36px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all var(--transition);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  .btn-white svg { width: 20px; height: 20px; fill: var(--green-wa); }
+
+  /* FAQ */
+  #faq { background: white; }
+
+  .faq-list { max-width: 720px; margin: 0 auto; }
+
+  .faq-item {
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    cursor: pointer;
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    gap: 16px;
+    user-select: none;
+  }
+
+  .faq-question:hover { color: var(--blue-mid); }
+
+  .faq-toggle {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition);
+  }
+
+  .faq-toggle svg { width: 12px; height: 12px; stroke: var(--gray-500); fill: none; stroke-width: 2.5; stroke-linecap: round; transition: transform var(--transition); }
+
+  .faq-item.open .faq-toggle { background: var(--blue-deep); border-color: var(--blue-deep); }
+  .faq-item.open .faq-toggle svg { stroke: white; transform: rotate(45deg); }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    font-size: 0.93rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+  }
+
+  .faq-item.open .faq-answer { max-height: 200px; padding-bottom: 20px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray-900);
+    padding: 56px 0 32px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand .logo-text { color: white; }
+  .footer-brand .logo-mark { background: rgba(255,255,255,0.1); }
+
+  .footer-brand p {
+    margin-top: 16px;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+
+  .footer-col h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li { margin-bottom: 10px; }
+
+  .footer-col a {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    transition: color var(--transition);
+  }
+
+  .footer-col a:hover { color: white; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .footer-wa-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37,211,102,0.12);
+    border: 1px solid rgba(37,211,102,0.2);
+    color: var(--green-wa);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all var(--transition);
+  }
+
+  .footer-wa-link:hover { background: rgba(37,211,102,0.2); }
+
+  .footer-wa-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* FLOATING BUTTON */
+  .floating-wa {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 200;
+    width: 56px; height: 56px;
+    background: var(--green-wa);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all var(--transition);
+    animation: pulse-wa 3s infinite;
+  }
+
+  .floating-wa:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+    animation: none;
+  }
+
+  .floating-wa svg { width: 26px; height: 26px; fill: white; }
+
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 32px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .principios-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-grid, .sobre-grid, .atendimento-grid { gap: 48px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    section { padding: 72px 0; }
+
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-image { order: -1; }
+    .hero-img-wrap { max-width: 100%; }
+    .hero-stat-card.card-2 { display: none; }
+
+    .sobre-grid { grid-template-columns: 1fr; }
+    .sobre-img { display: none; }
+
+    .steps-grid { grid-template-columns: 1fr; }
+    .steps-grid::before { display: none; }
+
+    .atendimento-grid { grid-template-columns: 1fr; }
+    .atendimento-img { display: none; }
+
+    .principios-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .depoimentos-grid { grid-template-columns: 1fr; }
+
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+
+    .trust-bar-inner { gap: 24px; }
+
+    .sobre-values { grid-template-columns: 1fr; }
+
+    .floating-wa { bottom: 20px; right: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .principios-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+    .hero-stat-card.card-1 { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="44" height="44" rx="12" fill="#1a3a5c"/>
+        <circle cx="22" cy="16" r="5" fill="none" stroke="white" stroke-width="1.6"/>
+        <path d="M22 11v10M17 16h10" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M14 33c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="white" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="30" r="6" fill="#4a90c4"/>
+        <path d="M32 27v6M29 30h6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;line-height:1.1">
+        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#1a3a5c;letter-spacing:-0.01em">Vida<span style="color:#4a90c4">+</span> Online</span>
+        <span style="font-size:0.65rem;color:#667085;letter-spacing:0.08em;text-transform:uppercase;font-weight:500">Clínica de Telemedicina</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#como-funciona">Como Funciona</a></li>
+      <li><a href="#atendimento">Atendimento</a></li>
+      <li><a href="#faq">Dúvidas</a></li>
+      <li><a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="nav-cta">Entrar em Contato</a></li>
+    </ul>
+    <button class="mobile-menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge fade-in">Telemedicina Responsável</div>
+        <h1 class="hero-title fade-in fade-in-delay-1">
+          Atendimento Médico Online com <em>Segurança</em> e Responsabilidade
+        </h1>
+        <p class="hero-subtitle fade-in fade-in-delay-2">
+          Consulta médica à distância com avaliação profissional individualizada e total sigilo nas informações.
+        </p>
+        <div class="hero-actions fade-in fade-in-delay-3">
+          <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="btn-primary">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-4.98-1.358l-.357-.212-3.759.9.952-3.662-.233-.376A9.793 9.793 0 012.182 12C2.182 6.574 6.574 2.182 12 2.182c5.426 0 9.818 4.392 9.818 9.818 0 5.426-4.392 9.818-9.818 9.818z"/></svg>
+            Entrar em Contato
+          </a>
+        </div>
+        <p class="hero-note fade-in fade-in-delay-4">Atendimento sujeito à avaliação médica individualizada</p>
+      </div>
+      <div class="hero-image fade-in fade-in-delay-2">
+        <div class="hero-img-wrap">
+          <svg viewBox="0 0 520 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:20px;display:block;box-shadow:0 12px 40px rgba(0,0,0,0.09)">
+            <rect width="520" height="390" rx="20" fill="#eef4fb"/>
+            <rect x="0" y="0" width="520" height="265" fill="#ddeaf7"/>
+            <rect x="340" y="30" width="140" height="110" rx="6" fill="#c8e3f8"/>
+            <rect x="340" y="30" width="140" height="110" rx="6" fill="none" stroke="#b0ccdf" stroke-width="1.5"/>
+            <line x1="410" y1="30" x2="410" y2="140" stroke="#b0ccdf" stroke-width="1.2"/>
+            <line x1="340" y1="85" x2="480" y2="85" stroke="#b0ccdf" stroke-width="1.2"/>
+            <rect x="341" y="31" width="68" height="53" rx="4" fill="#d9eef8" opacity="0.6"/>
+            <rect x="20" y="40" width="80" height="185" rx="4" fill="#c4d9ee"/>
+            <rect x="20" y="40" width="80" height="8" rx="2" fill="#a8c0d6"/>
+            <rect x="26" y="55" width="10" height="50" rx="2" fill="#4a90c4"/>
+            <rect x="38" y="65" width="10" height="40" rx="2" fill="#2d6a9f"/>
+            <rect x="50" y="58" width="10" height="47" rx="2" fill="#1a3a5c"/>
+            <rect x="62" y="62" width="10" height="43" rx="2" fill="#4a90c4" opacity="0.7"/>
+            <rect x="74" y="68" width="16" height="37" rx="2" fill="#2d6a9f" opacity="0.6"/>
+            <rect x="20" y="110" width="80" height="4" rx="1" fill="#a8c0d6"/>
+            <rect x="26" y="118" width="8" height="35" rx="2" fill="#4a90c4" opacity="0.5"/>
+            <rect x="36" y="122" width="12" height="31" rx="2" fill="#1a3a5c" opacity="0.7"/>
+            <rect x="50" y="115" width="9" height="38" rx="2" fill="#2d6a9f"/>
+            <rect x="61" y="119" width="11" height="34" rx="2" fill="#4a90c4"/>
+            <rect x="74" y="123" width="16" height="30" rx="2" fill="#1a3a5c" opacity="0.5"/>
+            <rect x="100" y="242" width="380" height="12" rx="4" fill="#c8d8e8"/>
+            <rect x="100" y="254" width="380" height="6" rx="2" fill="#b0c4d8"/>
+            <rect x="120" y="260" width="12" height="130" rx="3" fill="#b0c4d8"/>
+            <rect x="440" y="260" width="12" height="130" rx="3" fill="#b0c4d8"/>
+            <rect x="0" y="265" width="520" height="125" fill="#f0f6fb"/>
+            <rect x="228" y="138" width="204" height="134" rx="8" fill="#1a3a5c"/>
+            <rect x="233" y="143" width="194" height="124" rx="6" fill="#0f2440"/>
+            <rect x="238" y="148" width="184" height="114" rx="4" fill="#162d4a"/>
+            <ellipse cx="330" cy="183" rx="22" ry="24" fill="#2d6a9f" opacity="0.8"/>
+            <ellipse cx="330" cy="174" rx="13" ry="14" fill="#f0c8a0"/>
+            <ellipse cx="330" cy="163" rx="13" ry="8" fill="#3a2010"/>
+            <path d="M307 205 Q330 197 353 205 L357 232 H303 Z" fill="#2d5080"/>
+            <rect x="325" y="174" width="10" height="6" rx="2" fill="#e8b890" opacity="0.8"/>
+            <path d="M322 184 Q330 188 338 184" stroke="#c09070" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <circle cx="325" cy="180" r="2" fill="#3a2010"/>
+            <circle cx="335" cy="180" r="2" fill="#3a2010"/>
+            <rect x="238" y="253" width="80" height="6" rx="3" fill="#4a90c4" opacity="0.5"/>
+            <rect x="325" y="253" width="50" height="6" rx="3" fill="#667085" opacity="0.4"/>
+            <circle cx="413" cy="155" r="5" fill="#25d366"/>
+            <rect x="316" y="272" width="26" height="20" rx="2" fill="#1a3a5c"/>
+            <rect x="296" y="290" width="66" height="6" rx="3" fill="#1a3a5c"/>
+            <ellipse cx="180" cy="152" rx="17" ry="19" fill="#f0d0b0"/>
+            <ellipse cx="180" cy="140" rx="17" ry="10" fill="#2a1a0a"/>
+            <ellipse cx="176" cy="148" rx="6" ry="5" fill="#2a1a0a"/>
+            <path d="M148 200 Q153 183 180 181 Q207 183 212 200 L216 255 H144 Z" fill="#f8f8ff"/>
+            <rect x="172" y="183" width="16" height="72" fill="#2d6a9f"/>
+            <path d="M180 183 L160 212 L170 212 L180 202" fill="#eeeeee" stroke="#ddd" stroke-width="0.5"/>
+            <path d="M180 183 L200 212 L190 212 L180 202" fill="#eeeeee" stroke="#ddd" stroke-width="0.5"/>
+            <path d="M166 198 Q158 216 163 228 Q170 242 178 237" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="178" cy="238" r="5" fill="#111"/>
+            <path d="M148 225 Q143 237 146 250 L200 250" stroke="#f0d0b0" stroke-width="18" fill="none" stroke-linecap="round"/>
+            <path d="M212 225 Q217 237 214 250 L163 250" stroke="#f0d0b0" stroke-width="18" fill="none" stroke-linecap="round"/>
+            <rect x="146" y="240" width="122" height="16" rx="4" fill="#d8e4f0"/>
+            <rect x="150" y="244" width="114" height="8" rx="2" fill="#c0cedc"/>
+            <rect x="153" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="162" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="171" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="180" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="189" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="198" y="246" width="22" height="3" rx="1" fill="#aabccc"/>
+            <rect x="224" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="233" y="246" width="7" height="3" rx="1" fill="#aabccc"/>
+            <rect x="440" y="218" width="52" height="26" rx="4" fill="#fffef5"/>
+            <rect x="440" y="218" width="52" height="5" rx="2" fill="#4a90c4"/>
+            <line x1="445" y1="229" x2="488" y2="229" stroke="#c0c8d0" stroke-width="1"/>
+            <line x1="445" y1="235" x2="480" y2="235" stroke="#c0c8d0" stroke-width="1"/>
+            <rect x="106" y="222" width="28" height="32" rx="5" fill="#e8f1f9"/>
+            <rect x="106" y="222" width="28" height="8" rx="5" fill="#4a90c4" opacity="0.6"/>
+            <path d="M134 232 Q141 232 141 239 Q141 246 134 246" stroke="#c0cedc" stroke-width="2" fill="none"/>
+            <path d="M115 220 Q117 213 115 207" stroke="#c0cedc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M122 218 Q124 211 122 205" stroke="#c0cedc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+            <rect x="195" y="202" width="14" height="19" rx="2" fill="#e8f1f9" stroke="#4a90c4" stroke-width="0.8"/>
+            <rect x="198" y="206" width="8" height="2" rx="1" fill="#2d6a9f"/>
+            <rect x="198" y="210" width="6" height="2" rx="1" fill="#667085"/>
+            <rect x="198" y="214" width="7" height="2" rx="1" fill="#667085"/>
+          </svg>
+          <div class="hero-stat-card card-1">
+            <div class="stat-icon blue">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <div class="stat-text">
+              <strong>Profissional</strong>
+              <span>Habilitado e ético</span>
+            </div>
+          </div>
+          <div class="hero-stat-card card-2">
+            <div class="stat-icon blue">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <div class="stat-text">
+              <strong>Sigilo Total</strong>
+              <span>Dados protegidos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        Atendimento ético e responsável
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        Sigilo e privacidade garantidos
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Profissional médico habilitado
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Avaliação clínica individualizada
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img fade-in">
+        <svg viewBox="0 0 420 560" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:20px;display:block;box-shadow:0 12px 40px rgba(0,0,0,0.09);aspect-ratio:3/4">
+          <rect width="420" height="560" rx="20" fill="#eef4fb"/>
+          <rect x="0" y="0" width="420" height="390" fill="#ddeaf7"/>
+          <rect x="0" y="390" width="420" height="170" fill="#f0f6fb"/>
+          <rect x="30" y="30" width="110" height="80" rx="4" fill="#c8d8e8" stroke="#a8c0d6" stroke-width="1.5"/>
+          <rect x="36" y="36" width="98" height="68" rx="2" fill="#e8f4ff"/>
+          <rect x="44" y="44" width="82" height="4" rx="2" fill="#2d6a9f" opacity="0.5"/>
+          <rect x="52" y="52" width="66" height="2" rx="1" fill="#667085" opacity="0.4"/>
+          <rect x="56" y="58" width="58" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="48" y="66" width="72" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="60" y="74" width="48" height="2" rx="1" fill="#4a90c4" opacity="0.5"/>
+          <rect x="64" y="80" width="40" height="10" rx="2" fill="#1a3a5c" opacity="0.15"/>
+          <rect x="155" y="30" width="80" height="60" rx="4" fill="#c8d8e8" stroke="#a8c0d6" stroke-width="1.5"/>
+          <rect x="161" y="36" width="68" height="48" rx="2" fill="#e8f4ff"/>
+          <rect x="167" y="44" width="56" height="3" rx="1" fill="#2d6a9f" opacity="0.5"/>
+          <rect x="170" y="51" width="50" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="172" y="57" width="44" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="175" y="63" width="38" height="8" rx="2" fill="#1a3a5c" opacity="0.12"/>
+          <rect x="355" y="330" width="40" height="60" rx="6" fill="#c4d9ee"/>
+          <ellipse cx="375" cy="302" rx="20" ry="24" fill="#5a9e5a" opacity="0.8"/>
+          <ellipse cx="360" cy="312" rx="16" ry="20" fill="#4a8e4a" opacity="0.9"/>
+          <ellipse cx="390" cy="310" rx="14" ry="19" fill="#6aae6a" opacity="0.8"/>
+          <ellipse cx="375" cy="285" rx="11" ry="16" fill="#5aae5a" opacity="0.7"/>
+          <rect x="175" y="415" width="30" height="130" rx="9" fill="#344054"/>
+          <rect x="215" y="415" width="30" height="130" rx="9" fill="#344054"/>
+          <ellipse cx="190" cy="540" rx="20" ry="9" fill="#1a1a2e"/>
+          <ellipse cx="230" cy="540" rx="20" ry="9" fill="#1a1a2e"/>
+          <path d="M155 265 Q160 243 205 241 Q250 243 255 265 L262 425 H148 Z" fill="#f8f8ff"/>
+          <rect x="191" y="243" width="28" height="182" fill="#2d6a9f"/>
+          <path d="M205 243 L183 278 L195 278 L205 262" fill="#eeeeee" stroke="#e0e0e0" stroke-width="0.8"/>
+          <path d="M205 243 L227 278 L215 278 L205 262" fill="#eeeeee" stroke="#e0e0e0" stroke-width="0.8"/>
+          <rect x="158" y="315" width="32" height="38" rx="3" fill="none" stroke="#e0e4e8" stroke-width="1"/>
+          <rect x="160" y="321" width="28" height="4" rx="1" fill="#e0e4e8" opacity="0.6"/>
+          <rect x="161" y="323" width="9" height="24" rx="2" fill="#2d6a9f" opacity="0.7"/>
+          <path d="M191 262 Q177 288 174 312 Q170 336 181 348 Q192 361 205 354" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="205" cy="355" r="9" fill="#222" stroke="#333" stroke-width="1"/>
+          <circle cx="205" cy="355" r="4.5" fill="#444"/>
+          <circle cx="188" cy="260" r="4" fill="#333"/>
+          <circle cx="197" cy="256" r="4" fill="#333"/>
+          <path d="M155 285 Q144 316 148 366 L166 366" stroke="#f0d0b0" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M255 285 Q266 316 262 366 L244 366" stroke="#f8f8ff" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <rect x="242" y="324" width="56" height="72" rx="5" fill="#f8f8f8" stroke="#d0d8e0" stroke-width="1.5"/>
+          <rect x="242" y="324" width="56" height="9" rx="5" fill="#4a90c4"/>
+          <rect x="254" y="319" width="32" height="11" rx="3" fill="#3a7ab4" stroke="#2d6a9f" stroke-width="1"/>
+          <line x1="248" y1="341" x2="292" y2="341" stroke="#c0c8d0" stroke-width="1.2"/>
+          <line x1="248" y1="350" x2="292" y2="350" stroke="#c0c8d0" stroke-width="1.2"/>
+          <line x1="248" y1="359" x2="285" y2="359" stroke="#c0c8d0" stroke-width="1.2"/>
+          <line x1="248" y1="368" x2="288" y2="368" stroke="#c0c8d0" stroke-width="1.2"/>
+          <line x1="248" y1="377" x2="282" y2="377" stroke="#c0c8d0" stroke-width="1.2"/>
+          <path d="M248 387 Q256 383 264 387" stroke="#4a90c4" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="155" cy="366" rx="15" ry="11" fill="#f0d0b0"/>
+          <ellipse cx="205" cy="183" rx="38" ry="42" fill="#f0d0b0"/>
+          <ellipse cx="205" cy="151" rx="38" ry="22" fill="#1a0a00"/>
+          <rect x="168" y="156" width="74" height="12" fill="#1a0a00"/>
+          <path d="M194 148 Q198 178 196 200" stroke="#2a1a0a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="168" cy="184" rx="9" ry="12" fill="#e8c8a0"/>
+          <ellipse cx="242" cy="184" rx="9" ry="12" fill="#e8c8a0"/>
+          <ellipse cx="192" cy="182" rx="8" ry="8" fill="white"/>
+          <ellipse cx="218" cy="182" rx="8" ry="8" fill="white"/>
+          <ellipse cx="193" cy="183" rx="5" ry="5.5" fill="#1a0a00"/>
+          <ellipse cx="219" cy="183" rx="5" ry="5.5" fill="#1a0a00"/>
+          <circle cx="194" cy="181" r="2" fill="white"/>
+          <circle cx="220" cy="181" r="2" fill="white"/>
+          <path d="M185 173 Q192 170 199 173" stroke="#1a0a00" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M211 173 Q218 170 225 173" stroke="#1a0a00" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M202 188 Q205 197 208 188" stroke="#c0a080" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="200" cy="196" rx="4" ry="3" fill="#e8c098" opacity="0.5"/>
+          <ellipse cx="210" cy="196" rx="4" ry="3" fill="#e8c098" opacity="0.5"/>
+          <path d="M196 207 Q205 215 214 207" stroke="#c09070" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="222" y="272" width="22" height="28" rx="3" fill="#e8f1f9" stroke="#4a90c4" stroke-width="1"/>
+          <ellipse cx="233" cy="270" rx="6" ry="6" fill="#e8f1f9" stroke="#4a90c4" stroke-width="1"/>
+          <rect x="225" y="278" width="16" height="3" rx="1" fill="#2d6a9f"/>
+          <rect x="225" y="283" width="12" height="2" rx="1" fill="#667085" opacity="0.6"/>
+          <rect x="225" y="287" width="14" height="2" rx="1" fill="#667085" opacity="0.6"/>
+          <rect x="225" y="291" width="10" height="2" rx="1" fill="#4a90c4" opacity="0.7"/>
+        </svg>
+        <div class="sobre-img-accent">
+          <strong>100%</strong>
+          <span>Sigilo e confidencialidade no atendimento</span>
+        </div>
+      </div>
+      <div class="sobre-content fade-in fade-in-delay-1">
+        <span class="section-label">Sobre Nós</span>
+        <h2>Uma clínica comprometida com a ética médica</h2>
+        <p>Somos uma clínica voltada ao atendimento médico online, com foco em ética, responsabilidade e qualidade no cuidado. Nosso objetivo é oferecer orientação médica acessível, respeitando rigorosamente os critérios técnicos e profissionais da medicina.</p>
+        <p>Atuamos em conformidade com as diretrizes do Conselho Federal de Medicina para a prática de telemedicina, garantindo que cada atendimento seja conduzido com o mesmo padrão de qualidade e responsabilidade de uma consulta presencial.</p>
+        <div class="sobre-values">
+          <div class="value-chip">Ética profissional</div>
+          <div class="value-chip">Sigilo médico</div>
+          <div class="value-chip">Avaliação clínica rigorosa</div>
+          <div class="value-chip">Respeito ao paciente</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <span class="section-label">Processo</span>
+      <h2>Como funciona o atendimento</h2>
+      <p>O atendimento segue um fluxo estruturado, garantindo que cada paciente receba a atenção adequada à sua situação.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card fade-in fade-in-delay-1">
+        <div class="step-number">1</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        </div>
+        <h3>Contato inicial</h3>
+        <p>O paciente entra em contato via WhatsApp e descreve sua situação. Todas as informações são tratadas com absoluto sigilo.</p>
+      </div>
+      <div class="step-card fade-in fade-in-delay-2">
+        <div class="step-number">2</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        </div>
+        <h3>Avaliação médica</h3>
+        <p>O profissional realiza uma avaliação clínica individualizada, com base nas informações e histórico apresentados pelo paciente.</p>
+      </div>
+      <div class="step-card fade-in fade-in-delay-3">
+        <div class="step-number">3</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3>Orientação e conduta</h3>
+        <p>Após a avaliação, o médico determina a conduta mais apropriada, incluindo orientações, encaminhamentos ou documentos quando clinicamente indicados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATENDIMENTO MÉDICO -->
+<section id="atendimento">
+  <div class="container">
+    <div class="atendimento-grid">
+      <div class="atendimento-content fade-in">
+        <span class="section-label">Atendimento Médico</span>
+        <h2>Conduta médica com responsabilidade técnica</h2>
+        <p>O atendimento é realizado por profissional médico devidamente habilitado, em conformidade com os princípios éticos e técnicos que regem o exercício da medicina no Brasil.</p>
+        <p>Cada caso é avaliado de forma individual, considerando o histórico clínico, os sintomas relatados e as necessidades específicas do paciente.</p>
+        <div class="atendimento-notice">
+          <span class="notice-icon">⚕️</span>
+          <div class="notice-text">
+            <strong>Sobre documentos médicos</strong>
+            A emissão de atestados e outros documentos médicos ocorre exclusivamente quando há indicação clínica, após avaliação profissional criteriosa. Não há qualquer garantia prévia de emissão de documentos.
+          </div>
+        </div>
+      </div>
+      <div class="atendimento-img fade-in fade-in-delay-1">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:20px;display:block;box-shadow:0 20px 60px rgba(0,0,0,0.3);aspect-ratio:4/3">
+          <rect width="480" height="360" rx="20" fill="#162d4a"/>
+          <rect x="0" y="0" width="480" height="360" rx="20" fill="#1a3a5c"/>
+          <rect x="20" y="20" width="440" height="320" rx="14" fill="#0f2440"/>
+          <!-- Desk surface -->
+          <rect x="20" y="258" width="440" height="82" rx="14" fill="#1e3d5c"/>
+          <!-- Monitor -->
+          <rect x="140" y="80" width="200" height="150" rx="8" fill="#0a1828"/>
+          <rect x="145" y="85" width="190" height="140" rx="6" fill="#0d1f35"/>
+          <!-- Screen glow effect -->
+          <rect x="150" y="90" width="180" height="130" rx="4" fill="#112840"/>
+          <!-- Patient on screen -->
+          <ellipse cx="240" cy="125" rx="28" ry="30" fill="#1e4060"/>
+          <ellipse cx="240" cy="114" rx="15" ry="16" fill="#f0c8a0"/>
+          <ellipse cx="240" cy="102" rx="15" ry="9" fill="#3a2010"/>
+          <path d="M218 148 Q240 140 262 148 L266 175 H214 Z" fill="#2d5a8a"/>
+          <circle cx="240" cy="114" r="4" fill="none" stroke="#e0b080" stroke-width="0.5" opacity="0.3"/>
+          <!-- Screen UI elements -->
+          <rect x="150" y="210" width="55" height="7" rx="3" fill="#4a90c4" opacity="0.6"/>
+          <rect x="212" y="210" width="38" height="7" rx="3" fill="#667085" opacity="0.4"/>
+          <!-- Call timer -->
+          <rect x="312" y="92" width="14" height="7" rx="3" fill="#25d366" opacity="0.8"/>
+          <!-- Monitor stand -->
+          <rect x="228" y="230" width="24" height="20" rx="2" fill="#0a1828"/>
+          <rect x="208" y="248" width="64" height="8" rx="3" fill="#0a1828"/>
+          <!-- Laptop on left -->
+          <rect x="55" y="185" width="100" height="70" rx="6" fill="#0a1828"/>
+          <rect x="58" y="188" width="94" height="64" rx="4" fill="#0d1f35"/>
+          <rect x="62" y="192" width="86" height="56" rx="3" fill="#112840"/>
+          <!-- Laptop screen content -->
+          <rect x="66" y="197" width="78" height="4" rx="2" fill="#4a90c4" opacity="0.5"/>
+          <rect x="66" y="204" width="60" height="2" rx="1" fill="#667085" opacity="0.4"/>
+          <rect x="66" y="209" width="68" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="66" y="214" width="55" height="2" rx="1" fill="#667085" opacity="0.3"/>
+          <rect x="66" y="219" width="40" height="8" rx="2" fill="#4a90c4" opacity="0.3"/>
+          <rect x="66" y="230" width="78" height="2" rx="1" fill="#667085" opacity="0.2"/>
+          <rect x="66" y="235" width="62" height="2" rx="1" fill="#667085" opacity="0.2"/>
+          <rect x="66" y="240" width="70" height="2" rx="1" fill="#667085" opacity="0.2"/>
+          <!-- Laptop base -->
+          <rect x="48" y="254" width="116" height="8" rx="3" fill="#0a1828"/>
+          <!-- Keyboard glow -->
+          <rect x="52" y="258" width="108" height="4" rx="2" fill="#4a90c4" opacity="0.08"/>
+          <!-- Medical notes pad on right -->
+          <rect x="330" y="235" width="110" height="80" rx="5" fill="#fffef5" opacity="0.9"/>
+          <rect x="330" y="235" width="110" height="8" rx="5" fill="#4a90c4"/>
+          <line x1="338" y1="252" x2="432" y2="252" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <line x1="338" y1="261" x2="432" y2="261" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <line x1="338" y1="270" x2="425" y2="270" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <line x1="338" y1="279" x2="428" y2="279" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <line x1="338" y1="288" x2="420" y2="288" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <line x1="338" y1="297" x2="435" y2="297" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+          <!-- Pen on notepad -->
+          <rect x="435" y="232" width="5" height="34" rx="2" fill="#2d6a9f" transform="rotate(15,437,249)"/>
+          <!-- Coffee mug -->
+          <rect x="410" y="228" width="34" height="38" rx="7" fill="#e8f1f9" opacity="0.9"/>
+          <rect x="410" y="228" width="34" height="10" rx="7" fill="#4a90c4" opacity="0.7"/>
+          <path d="M444 240 Q452 240 452 248 Q452 256 444 256" stroke="#c0cedc" stroke-width="2.5" fill="none"/>
+          <path d="M420 226 Q422 220 420 214" stroke="#c0cedc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path x1="428" y1="224" x2="428" y2="218" stroke="#c0cedc" stroke-width="1.5" opacity="0.4"/>
+          <!-- Stethoscope on desk -->
+          <path d="M300 258 Q310 265 320 258 Q330 252 335 260" stroke="#1a1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <circle cx="335" cy="261" r="7" fill="#222" stroke="#333" stroke-width="1"/>
+          <circle cx="335" cy="261" r="3.5" fill="#444"/>
+          <!-- Person silhouette at desk (from behind/side, seated) -->
+          <!-- Chair back -->
+          <rect x="185" y="295" width="110" height="65" rx="6" fill="#0d2035"/>
+          <rect x="192" y="302" width="96" height="52" rx="4" fill="#162d4a"/>
+          <!-- Person torso from behind -->
+          <ellipse cx="240" cy="280" rx="48" ry="32" fill="#f8f8ff"/>
+          <!-- White coat from back -->
+          <path d="M192 285 Q195 268 240 266 Q285 268 288 285 L292 340 H188 Z" fill="#f8f8ff"/>
+          <!-- Scrubs line underneath -->
+          <rect x="224" y="268" width="32" height="72" fill="#2d6a9f"/>
+          <!-- Head from behind -->
+          <ellipse cx="240" cy="248" rx="34" ry="36" fill="#f0d0b0"/>
+          <!-- Hair from behind -->
+          <ellipse cx="240" cy="228" rx="34" ry="22" fill="#1a0a00"/>
+          <rect x="207" y="232" width="66" height="14" fill="#1a0a00"/>
+          <!-- Neck -->
+          <rect x="228" y="272" width="24" height="16" fill="#e8c8a0"/>
+          <!-- Shoulders of coat -->
+          <ellipse cx="196" cy="276" rx="18" ry="12" fill="#f0f0ff"/>
+          <ellipse cx="284" cy="276" rx="18" ry="12" fill="#f0f0ff"/>
+          <!-- Arms on desk/keyboard area -->
+          <path d="M192 290 Q180 310 178 338 L220 338" stroke="#f8f8ff" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <path d="M288 290 Q300 310 302 338 L262 338" stroke="#f8f8ff" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <!-- Keyboard (main) -->
+          <rect x="178" y="332" width="124" height="22" rx="4" fill="#0f2035"/>
+          <rect x="182" y="336" width="116" height="14" rx="3" fill="#0a1828"/>
+          <!-- Key rows -->
+          <rect x="186" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="198" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="210" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="222" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="234" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="246" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="258" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="270" y="338" width="10" height="4" rx="1" fill="#162d4a"/>
+          <rect x="186" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <rect x="196" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <rect x="206" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <rect x="216" y="344" width="30" height="3" rx="1" fill="#162d4a"/>
+          <rect x="248" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <rect x="258" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <rect x="268" y="344" width="8" height="3" rx="1" fill="#4a90c4" opacity="0.4"/>
+          <rect x="280" y="344" width="8" height="3" rx="1" fill="#162d4a"/>
+          <!-- Screen ambient light on person -->
+          <rect x="186" y="248" width="108" height="30" rx="6" fill="#4a90c4" opacity="0.04"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCÍPIOS -->
+<section id="principios">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <span class="section-label">Nossos Princípios</span>
+      <h2>Os valores que norteiam nosso trabalho</h2>
+      <p>Cada atendimento é guiado por princípios fundamentais que garantem qualidade, respeito e segurança ao paciente.</p>
+    </div>
+    <div class="principios-grid">
+      <div class="principio-card fade-in fade-in-delay-1">
+        <div class="principio-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+        </div>
+        <h3>Ética Profissional</h3>
+        <p>Atuamos em estrita conformidade com o Código de Ética Médica e as normativas do Conselho Federal de Medicina.</p>
+      </div>
+      <div class="principio-card fade-in fade-in-delay-2">
+        <div class="principio-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <h3>Sigilo e Privacidade</h3>
+        <p>Todas as informações compartilhadas são protegidas pelo sigilo médico, garantindo a confidencialidade absoluta de cada paciente.</p>
+      </div>
+      <div class="principio-card fade-in fade-in-delay-3">
+        <div class="principio-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        </div>
+        <h3>Atendimento Responsável</h3>
+        <p>Cada decisão clínica é baseada em critérios técnicos e científicos, com rigor e responsabilidade profissional.</p>
+      </div>
+      <div class="principio-card fade-in fade-in-delay-4">
+        <div class="principio-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <h3>Respeito ao Paciente</h3>
+        <p>O cuidado com o bem-estar, a dignidade e as necessidades individuais do paciente é central em cada atendimento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <span class="section-label">Depoimentos</span>
+      <h2>O que dizem nossos pacientes</h2>
+    </div>
+    <div class="depoimentos-grid">
+      <div class="depoimento-card fade-in fade-in-delay-1">
+        <p class="depoimento-text">Atendimento claro, objetivo e muito profissional. Fui bem orientado em relação ao meu caso e senti segurança durante toda a consulta.</p>
+        <div class="depoimento-author">
+          <div class="author-avatar">R</div>
+          <div class="author-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Ricardo M.</strong>
+            <span>Paciente verificado</span>
+          </div>
+        </div>
+      </div>
+      <div class="depoimento-card fade-in fade-in-delay-2">
+        <p class="depoimento-text">Fui bem orientado durante a consulta. O médico foi atencioso, explicou tudo com clareza e respondeu todas as minhas dúvidas com paciência.</p>
+        <div class="depoimento-author">
+          <div class="author-avatar">C</div>
+          <div class="author-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Camila S.</strong>
+            <span>Paciente verificada</span>
+          </div>
+        </div>
+      </div>
+      <div class="depoimento-card fade-in fade-in-delay-3">
+        <p class="depoimento-text">Serviço sério e confiável. Fiquei impressionado com a seriedade do atendimento. Tudo feito de forma responsável e ética.</p>
+        <div class="depoimento-author">
+          <div class="author-avatar">F</div>
+          <div class="author-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Felipe A.</strong>
+            <span>Paciente verificado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label" style="color: rgba(255,255,255,0.5);">Fale Conosco</span>
+      <h2>Precisa de orientação médica?</h2>
+      <p>Entre em contato e um profissional irá avaliar a sua situação de forma individual, ética e sigilosa.</p>
+      <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="btn-white">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-4.98-1.358l-.357-.212-3.759.9.952-3.662-.233-.376A9.793 9.793 0 012.182 12C2.182 6.574 6.574 2.182 12 2.182c5.426 0 9.818 4.392 9.818 9.818 0 5.426-4.392 9.818-9.818 9.818z"/></svg>
+        Falar com um profissional
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <span class="section-label">Dúvidas Frequentes</span>
+      <h2>Perguntas frequentes</h2>
+      <p>Esclarecemos as principais dúvidas sobre o atendimento médico online.</p>
+    </div>
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Como funciona o atendimento médico online?
+          <div class="faq-toggle"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">O atendimento ocorre de forma remota, via mensagem ou videochamada. Após o contato inicial, o profissional médico realiza uma avaliação clínica completa, baseada nas informações fornecidas pelo paciente, e define a conduta mais adequada para cada caso.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          O atendimento online é seguro?
+          <div class="faq-toggle"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">Sim. O atendimento é realizado por profissional médico habilitado, em conformidade com as diretrizes do Conselho Federal de Medicina para a telemedicina. Todas as informações do paciente são protegidas pelo sigilo médico.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Quando um atestado médico pode ser emitido?
+          <div class="faq-toggle"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">A emissão de atestados médicos ocorre exclusivamente após avaliação clínica e quando há indicação médica que a justifique. A decisão é de responsabilidade do profissional médico, com base nos critérios técnicos e éticos da medicina. Não há garantia prévia de emissão de qualquer documento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Como recebo as orientações médicas?
+          <div class="faq-toggle"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">Após a avaliação, as orientações são transmitidas de forma clara e objetiva pelo mesmo canal de comunicação utilizado no atendimento. Documentos, quando emitidos, são enviados de forma digital e segura.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Meus dados estão protegidos?
+          <div class="faq-toggle"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">Todas as informações compartilhadas durante o atendimento são protegidas pelo sigilo médico e tratadas em conformidade com a Lei Geral de Proteção de Dados (LGPD). Seus dados jamais são compartilhados com terceiros.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="12" fill="rgba(255,255,255,0.1)"/>
+            <circle cx="22" cy="16" r="5" fill="none" stroke="white" stroke-width="1.6"/>
+            <path d="M22 11v10M17 16h10" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M14 33c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="white" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <circle cx="32" cy="30" r="6" fill="#4a90c4"/>
+            <path d="M32 27v6M29 30h6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div style="display:flex;flex-direction:column;line-height:1.1">
+            <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:white;letter-spacing:-0.01em">Vida<span style="color:#4a90c4">+</span> Online</span>
+            <span style="font-size:0.65rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;font-weight:500">Clínica de Telemedicina</span>
+          </div>
+        </div>
+        <p>Atendimento médico online conforme as diretrizes de telemedicina do Conselho Federal de Medicina.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Sobre a Clínica</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#atendimento">Atendimento</a></li>
+          <li><a href="#principios">Nossos Princípios</a></li>
+          <li><a href="#faq">Dúvidas Frequentes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li>
+            <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="footer-wa-link">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              WhatsApp
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Clínica Vida+ Online. Atendimento conforme diretrizes de telemedicina.</p>
+      <p>Este site tem caráter informativo. O atendimento médico é realizado por profissional habilitado.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="floating-wa" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-4.98-1.358l-.357-.212-3.759.9.952-3.662-.233-.376A9.793 9.793 0 012.182 12C2.182 6.574 6.574 2.182 12 2.182c5.426 0 9.818 4.392 9.818 9.818 0 5.426-4.392 9.818-9.818 9.818z"/></svg>
+</a>
+
+<script>
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 20) {
+      nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
