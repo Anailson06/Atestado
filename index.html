@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedDoc Online — Atestado Médico com Responsabilidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2137;
+  --blue: #1a4a7a;
+  --mid: #2563a8;
+  --accent: #3b82c4;
+  --light: #e8f1fb;
+  --white: #ffffff;
+  --g50: #f7f9fc;
+  --g100: #eef1f6;
+  --g300: #c8d0dc;
+  --g500: #64748b;
+  --g700: #334155;
+  --g900: #0f172a;
+  --green: #16a34a;
+  --wa: #25d366;
+  --r: 10px;
+  --rl: 18px;
+  --s1: 0 1px 4px rgba(0,0,0,0.06);
+  --s2: 0 4px 20px rgba(0,0,0,0.08);
+  --s3: 0 12px 48px rgba(0,0,0,0.11);
+  --t: .3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--g700);background:var(--white);line-height:1.65;overflow-x:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy);line-height:1.2}
+h1{font-size:clamp(2.1rem,5vw,3.6rem)}
+h2{font-size:clamp(1.7rem,3.5vw,2.6rem)}
+h3{font-size:clamp(1.05rem,2vw,1.3rem)}
+p{font-size:clamp(.93rem,1.5vw,1.04rem);color:var(--g500);line-height:1.75}
+a{text-decoration:none;color:inherit}
+img{display:block;width:100%;object-fit:cover}
+.container{max-width:1160px;margin:0 auto;padding:0 28px}
+section{padding:100px 0}
+
+.fi{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.fi.v{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.07);transition:box-shadow var(--t)}
+.nav-i{display:flex;align-items:center;justify-content:space-between;height:76px;max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* LOGO */
+.logo{display:flex;align-items:center;gap:13px;user-select:none}
+.logo-wordmark{display:flex;flex-direction:column;line-height:1}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;color:var(--navy);letter-spacing:-.02em}
+.logo-name span{color:var(--accent)}
+.logo-sub{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g500);margin-top:3px}
+
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--g700);transition:color var(--t);letter-spacing:.01em}
+.nav-links a:hover{color:var(--mid)}
+.nav-cta{background:var(--navy)!important;color:#fff!important;padding:11px 24px;border-radius:8px;font-size:.85rem!important;font-weight:600!important;letter-spacing:.01em;transition:all var(--t)!important;box-shadow:0 2px 12px rgba(13,33,55,.2)}
+.nav-cta:hover{background:var(--blue)!important;transform:translateY(-1px);box-shadow:0 4px 20px rgba(13,33,55,.28)!important}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.mob-btn span{display:block;width:22px;height:2px;background:var(--g700);margin:5px 0;border-radius:2px}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:76px;background:linear-gradient(150deg,#f4f8fd 0%,#eaf2fb 55%,#e0ecf8 100%);position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;top:-160px;right:-160px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,196,.07) 0%,transparent 68%);border-radius:50%;pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(59,130,196,.1);border:1px solid rgba(59,130,196,.22);padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:600;color:var(--mid);margin-bottom:26px;letter-spacing:.05em;text-transform:uppercase}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;flex-shrink:0}
+.hero-title{margin-bottom:22px}
+.hero-title em{font-style:italic;color:var(--mid)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.13rem);color:var(--g500);margin-bottom:40px;max-width:480px}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;padding:17px 34px;border-radius:10px;font-size:.95rem;font-weight:600;letter-spacing:.01em;transition:all var(--t);box-shadow:0 4px 24px rgba(13,33,55,.25)}
+.btn-wa:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(13,33,55,.32)}
+.btn-wa svg{width:19px;height:19px;fill:currentColor;flex-shrink:0}
+.hero-note{font-size:.8rem;color:var(--g500);display:flex;align-items:center;gap:7px}
+.hero-note::before{content:'';width:16px;height:16px;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2316a34a' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+.hero-img-wrap{position:relative;width:100%;max-width:540px;margin-left:auto}
+.hero-img-wrap img{border-radius:var(--rl);box-shadow:var(--s3);aspect-ratio:4/3;height:auto}
+.card-float{position:absolute;background:#fff;border-radius:var(--r);padding:14px 18px;box-shadow:var(--s2);display:flex;align-items:center;gap:12px}
+.card-float.c1{bottom:-22px;left:-22px}
+.card-float.c2{top:-18px;right:-18px}
+.ci{width:40px;height:40px;border-radius:9px;background:var(--light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci svg{width:20px;height:20px;stroke:var(--mid);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ct strong{display:block;font-size:1rem;color:var(--g900);font-weight:700;line-height:1}
+.ct span{font-size:.75rem;color:var(--g500);display:block;margin-top:3px}
+
+/* TRUST BAR */
+.trust{padding:30px 0;border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);background:#fff}
+.trust-i{display:flex;align-items:center;justify-content:center;gap:52px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:9px;font-size:.83rem;font-weight:500;color:var(--g700)}
+.trust-item svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round}
+
+/* SECTION HEADERS */
+.slabel{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.sh{max-width:600px;margin-bottom:64px}
+.sh.c{text-align:center;margin-left:auto;margin-right:auto}
+.sh p{margin-top:16px}
+
+/* SOBRE */
+#sobre{background:#fff}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.sobre-img-wrap{position:relative}
+.sobre-img-wrap img{border-radius:var(--rl);box-shadow:var(--s3);aspect-ratio:3/4;height:auto}
+.sobre-badge{position:absolute;bottom:28px;right:-24px;background:var(--navy);color:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:var(--s2)}
+.sobre-badge strong{display:block;font-family:'Playfair Display',serif;font-size:2rem;line-height:1}
+.sobre-badge span{font-size:.78rem;opacity:.75;margin-top:5px;display:block}
+.sobre-txt h2{margin-bottom:20px}
+.sobre-txt p{margin-bottom:16px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.chip{display:flex;align-items:center;gap:10px;background:var(--g50);border:1px solid var(--g100);border-radius:8px;padding:12px 14px;font-size:.85rem;font-weight:500;color:var(--g700)}
+.chip::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;flex-shrink:0}
+
+/* ATESTADO */
+#atestado{background:var(--g50);padding:100px 0}
+.atestado-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.atestado-img img{border-radius:var(--rl);box-shadow:var(--s3);aspect-ratio:4/3;height:auto}
+.atestado-txt h2{margin-bottom:20px}
+.atestado-txt p{margin-bottom:16px}
+.aviso-box{background:#fff;border:1px solid var(--g100);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:20px 22px;margin-top:28px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--s1)}
+.aviso-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px}
+.aviso-txt{font-size:.86rem;color:var(--g500);line-height:1.65}
+.aviso-txt strong{color:var(--g900);font-size:.9rem;display:block;margin-bottom:4px}
+.tipos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.tipo{background:#fff;border:1px solid var(--g100);border-radius:var(--r);padding:18px 20px;box-shadow:var(--s1);transition:all var(--t)}
+.tipo:hover{border-color:var(--accent);box-shadow:var(--s2);transform:translateY(-2px)}
+.tipo h4{font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--navy);margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.tipo h4::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.tipo p{font-size:.8rem;margin:0;line-height:1.55}
+
+/* COMO FUNCIONA */
+#como{background:#fff}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
+.steps::before{content:'';position:absolute;top:52px;left:calc(16.6% + 28px);right:calc(16.6% + 28px);height:1px;background:var(--accent);opacity:.2}
+.step{background:var(--g50);border:1px solid var(--g100);border-radius:var(--rl);padding:38px 28px;text-align:center;position:relative;transition:all var(--t)}
+.step:hover{box-shadow:var(--s2);transform:translateY(-4px);border-color:var(--accent)}
+.step-n{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:var(--navy);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-icon{width:62px;height:62px;background:var(--light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:8px auto 22px}
+.step-icon svg{width:27px;height:27px;stroke:var(--mid);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.step h3{margin-bottom:10px}
+
+/* DARK */
+#dark{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+#dark::before{content:'';position:absolute;top:-200px;right:-200px;width:800px;height:800px;background:radial-gradient(circle,rgba(255,255,255,.035) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+#dark h2,#dark h3{color:#fff}
+#dark p{color:rgba(255,255,255,.68)}
+#dark .slabel{color:rgba(255,255,255,.45)}
+.dark-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.dark-txt h2{margin-bottom:20px}
+.dark-txt p{margin-bottom:16px}
+.dark-notice{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:var(--r);padding:22px 24px;margin-top:30px;display:flex;gap:14px}
+.dark-notice-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.dark-notice-txt{font-size:.87rem;color:rgba(255,255,255,.72);line-height:1.65}
+.dark-notice-txt strong{color:#fff;display:block;margin-bottom:4px}
+.dark-img img{border-radius:var(--rl);box-shadow:0 20px 64px rgba(0,0,0,.35);aspect-ratio:4/3;height:auto}
+
+/* PRINCÍPIOS */
+#principios{background:#fff}
+.princ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.princ{border:1px solid var(--g100);border-radius:var(--rl);padding:36px 22px;text-align:center;transition:all var(--t)}
+.princ:hover{border-color:var(--accent);box-shadow:var(--s2);transform:translateY(-4px)}
+.princ:hover .pi{background:var(--navy)}
+.princ:hover .pi svg{stroke:#fff}
+.pi{width:54px;height:54px;background:var(--light);border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;transition:background var(--t)}
+.pi svg{width:23px;height:23px;stroke:var(--mid);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
+.princ h3{margin-bottom:8px;font-size:1rem}
+
+/* DEPOIMENTOS */
+#dep{background:var(--g50)}
+.dep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dep-card{background:#fff;border-radius:var(--rl);padding:32px;box-shadow:var(--s1);border:1px solid var(--g100);position:relative}
+.dep-card::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--light);position:absolute;top:12px;left:22px;line-height:1}
+.dep-txt{font-size:.97rem;color:var(--g700);line-height:1.72;margin-top:26px;margin-bottom:22px;font-style:italic}
+.dep-author{display:flex;align-items:center;gap:12px;border-top:1px solid var(--g100);padding-top:18px}
+.dep-av{width:40px;height:40px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;color:var(--mid);font-weight:700}
+.dep-info strong{display:block;font-size:.85rem;color:var(--g700);font-weight:600}
+.dep-info span{font-size:.75rem;color:var(--g500)}
+.stars{display:flex;gap:2px;margin-bottom:3px}
+.stars span{color:#f59e0b;font-size:.82rem}
+
+/* CTA */
+#cta{background:linear-gradient(135deg,#0d2137 0%,#1a4a7a 100%);text-align:center;padding:108px 0;position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 60%);border-radius:50%;pointer-events:none}
+#cta h2{color:#fff;margin-bottom:16px}
+#cta .sub{color:rgba(255,255,255,.68);margin-bottom:42px;font-size:1.1rem;max-width:460px;margin-left:auto;margin-right:auto}
+.btn-white{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--navy);padding:17px 38px;border-radius:10px;font-size:.95rem;font-weight:700;transition:all var(--t);box-shadow:0 4px 24px rgba(0,0,0,.18)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(0,0,0,.26)}
+.btn-white svg{width:20px;height:20px;fill:var(--wa)}
+
+/* FAQ */
+#faq{background:#fff}
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--g100)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 0;cursor:pointer;font-size:.96rem;font-weight:500;color:var(--g700);gap:16px;user-select:none}
+.faq-q:hover{color:var(--mid)}
+.faq-tog{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--g300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t)}
+.faq-tog svg{width:12px;height:12px;stroke:var(--g500);fill:none;stroke-width:2.5;stroke-linecap:round;transition:transform var(--t)}
+.faq-item.open .faq-tog{background:var(--navy);border-color:var(--navy)}
+.faq-item.open .faq-tog svg{stroke:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;font-size:.92rem;color:var(--g500);line-height:1.75}
+.faq-item.open .faq-a{max-height:220px;padding-bottom:22px}
+
+/* FOOTER */
+footer{background:var(--g900);padding:60px 0 34px}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:64px;margin-bottom:52px}
+.footer-brand p{margin-top:16px;font-size:.85rem;color:rgba(255,255,255,.38);line-height:1.75}
+.footer-col h4{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:10px}
+.footer-col a{font-size:.86rem;color:rgba(255,255,255,.52);transition:color var(--t)}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.footer-bottom p{font-size:.78rem;color:rgba(255,255,255,.28)}
+.wa-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:var(--wa);padding:9px 18px;border-radius:8px;font-size:.82rem;font-weight:600;transition:all var(--t)}
+.wa-pill:hover{background:rgba(37,211,102,.18)}
+.wa-pill svg{width:16px;height:16px;fill:currentColor}
+
+/* FLOATING */
+.float-wa{position:fixed;bottom:28px;right:28px;z-index:300;width:58px;height:58px;background:var(--wa);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(37,211,102,.42);transition:all var(--t);animation:pulse-w 3s infinite}
+.float-wa:hover{transform:scale(1.1);animation:none}
+.float-wa svg{width:27px;height:27px;fill:#fff}
+@keyframes pulse-w{0%,100%{box-shadow:0 4px 22px rgba(37,211,102,.42)}50%{box-shadow:0 4px 36px rgba(37,211,102,.65),0 0 0 9px rgba(37,211,102,.1)}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .princ-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-grid,.sobre-grid,.atestado-grid,.dark-grid{gap:48px}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  section{padding:72px 0}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-img-wrap{order:-1;max-width:100%}
+  .card-float.c2{display:none}
+  .sobre-grid{grid-template-columns:1fr}
+  .sobre-img-wrap{display:none}
+  .atestado-grid{grid-template-columns:1fr}
+  .atestado-img{order:-1}
+  .dark-grid{grid-template-columns:1fr}
+  .dark-img{display:none}
+  .steps{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .princ-grid{grid-template-columns:1fr 1fr;gap:16px}
+  .dep-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:40px}
+  .nav-links{display:none}
+  .mob-btn{display:block}
+  .trust-i{gap:28px}
+  .chips,.tipos{grid-template-columns:1fr}
+  .float-wa{bottom:20px;right:20px}
+}
+@media(max-width:480px){
+  h1{font-size:1.9rem}
+  .princ-grid{grid-template-columns:1fr}
+  .card-float.c1{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-i">
+    <a href="#" class="logo">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="46" height="46" rx="13" fill="#0d2137"/>
+        <rect x="11" y="9" width="20" height="27" rx="3" fill="none" stroke="white" stroke-width="1.7"/>
+        <line x1="15" y1="16" x2="27" y2="16" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="15" y1="20.5" x2="27" y2="20.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="15" y1="25" x2="21" y2="25" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="32" cy="32" r="9.5" fill="#3b82c4"/>
+        <path d="M32 27v10M27 32h10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-wordmark">
+        <span class="logo-name">Med<span>Doc</span> Online</span>
+        <span class="logo-sub">Atestado Médico Digital</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#atestado">Atestados</a></li>
+      <li><a href="#como">Como Funciona</a></li>
+      <li><a href="#faq">Dúvidas</a></li>
+      <li><a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="nav-cta">Solicitar Atendimento</a></li>
+    </ul>
+    <button class="mob-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="fi">
+        <div class="hero-badge">Telemedicina Responsável e Ética</div>
+        <h1 class="hero-title">Atestado Médico Online com <em>Avaliação Profissional</em></h1>
+        <p class="hero-sub">Atendimento médico à distância, com emissão de atestado quando há indicação clínica — realizado por profissional habilitado, com sigilo total.</p>
+        <div class="hero-actions">
+          <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="btn-wa">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+            Solicitar Atendimento
+          </a>
+        </div>
+        <p class="hero-note">Atestado emitido somente após avaliação médica individual</p>
+      </div>
+      <div class="hero-img-wrap fi d2">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=900&q=85&auto=format&fit=crop&crop=top" alt="Médica profissional sorridente" loading="eager"/>
+        <div class="card-float c1">
+          <div class="ci"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <div class="ct"><strong>CRM Ativo</strong><span>Profissional habilitado</span></div>
+        </div>
+        <div class="card-float c2">
+          <div class="ci"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+          <div class="ct"><strong>Atestado Válido</strong><span>Emitido digitalmente</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="container">
+    <div class="trust-i">
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Médico com CRM ativo</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>Sigilo médico garantido</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Atestado com validade legal</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Enviado digitalmente</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap fi">
+        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=700&q=85&auto=format&fit=crop&crop=faces,top" alt="Médico profissional com jaleco branco" loading="lazy"/>
+        <div class="sobre-badge">
+          <strong>100%</strong>
+          <span>Sigilo e confidencialidade</span>
+        </div>
+      </div>
+      <div class="sobre-txt fi d1">
+        <span class="slabel">Sobre Nós</span>
+        <h2>Comprometidos com a ética e a responsabilidade médica</h2>
+        <p>Somos uma clínica de telemedicina especializada em atendimento médico online e emissão de atestados. Nosso trabalho é guiado por rigor ético, respeito ao paciente e total conformidade com as normas do Conselho Federal de Medicina.</p>
+        <p>Cada atendimento é conduzido por profissional médico habilitado, com avaliação clínica individualizada — da mesma forma que ocorreria em uma consulta presencial.</p>
+        <div class="chips">
+          <div class="chip">Médico com CRM ativo</div>
+          <div class="chip">Sigilo médico total</div>
+          <div class="chip">Atestado com validade legal</div>
+          <div class="chip">Avaliação individual rigorosa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATESTADO -->
+<section id="atestado">
+  <div class="container">
+    <div class="atestado-grid">
+      <div class="fi">
+        <span class="slabel">Atestado Médico</span>
+        <h2>Emissão de atestado com base em avaliação clínica</h2>
+        <p>O atestado médico é um documento emitido exclusivamente após consulta com profissional habilitado. Cada caso é avaliado individualmente, considerando sintomas, histórico de saúde e necessidade clínica apresentada.</p>
+        <p>O documento possui validade legal e é enviado digitalmente ao paciente após a consulta, quando há indicação médica para sua emissão.</p>
+        <div class="tipos">
+          <div class="tipo fi d1"><h4>Para o trabalho</h4><p>Justificativa de ausência laboral por motivo de saúde, quando clinicamente indicado.</p></div>
+          <div class="tipo fi d2"><h4>Para a escola</h4><p>Documento médico para justificativa de falta em instituição de ensino, conforme avaliação.</p></div>
+          <div class="tipo fi d3"><h4>Atestado de acompanhante</h4><p>Para quem acompanha familiar em situação de saúde que exige presença.</p></div>
+          <div class="tipo fi d4"><h4>Declaração médica</h4><p>Documento para diversas finalidades, emitido conforme julgamento clínico.</p></div>
+        </div>
+        <div class="aviso-box">
+          <span class="aviso-icon">⚕️</span>
+          <div class="aviso-txt">
+            <strong>Avaliação médica é obrigatória</strong>
+            A emissão do atestado depende de consulta clínica individualizada. Não há emissão automática nem garantia prévia de documento. A decisão é de responsabilidade exclusiva do médico.
+          </div>
+        </div>
+      </div>
+      <div class="atestado-img fi d2">
+        <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=85&auto=format&fit=crop&crop=top" alt="Médico preenchendo documento médico" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como">
+  <div class="container">
+    <div class="sh c fi">
+      <span class="slabel">Processo</span>
+      <h2>Como funciona o atendimento</h2>
+      <p>O processo foi desenvolvido para ser claro e acessível ao paciente, sem abrir mão do rigor técnico e ético exigido na prática médica.</p>
+    </div>
+    <div class="steps">
+      <div class="step fi d1">
+        <div class="step-n">1</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg></div>
+        <h3>Contato via WhatsApp</h3>
+        <p>O paciente entra em contato e descreve sua situação. As informações são recebidas com total confidencialidade.</p>
+      </div>
+      <div class="step fi d2">
+        <div class="step-n">2</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg></div>
+        <h3>Avaliação médica individual</h3>
+        <p>O médico realiza uma consulta clínica detalhada, considerando sintomas, histórico de saúde e a situação apresentada.</p>
+      </div>
+      <div class="step fi d3">
+        <div class="step-n">3</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <h3>Atestado e orientações</h3>
+        <p>Quando há indicação clínica, o atestado é emitido e enviado digitalmente. O médico orienta sobre a conduta adequada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DARK SECTION -->
+<section id="dark">
+  <div class="container">
+    <div class="dark-grid">
+      <div class="fi">
+        <span class="slabel">Responsabilidade Médica</span>
+        <h2>Atendimento conduzido com total responsabilidade profissional</h2>
+        <p>Nossa atuação segue as diretrizes do Conselho Federal de Medicina para a prática da telemedicina no Brasil. Cada atendimento é documentado e conduzido com o mesmo rigor de uma consulta presencial.</p>
+        <p>O médico assume integralmente a conduta clínica, garantindo que o atestado seja legalmente válido e eticamente justificado em cada caso.</p>
+        <div class="dark-notice">
+          <span class="dark-notice-icon">📋</span>
+          <div class="dark-notice-txt">
+            <strong>Sobre a validade do atestado</strong>
+            Atestados emitidos por médico habilitado, com CRM ativo, após consulta clínica, possuem plena validade legal para fins trabalhistas, escolares e demais usos previstos em lei.
+          </div>
+        </div>
+      </div>
+      <div class="dark-img fi d2">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=85&auto=format&fit=crop&crop=top" alt="Médico em atendimento profissional" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCÍPIOS -->
+<section id="principios">
+  <div class="container">
+    <div class="sh c fi">
+      <span class="slabel">Nossos Princípios</span>
+      <h2>Os valores que guiam nosso trabalho</h2>
+      <p>Cada atendimento é norteado por princípios médicos fundamentais que garantem qualidade, respeito e segurança ao paciente.</p>
+    </div>
+    <div class="princ-grid">
+      <div class="princ fi d1">
+        <div class="pi"><svg viewBox="0 0 24 24"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></div>
+        <h3>Ética profissional</h3>
+        <p>Atuamos em conformidade com o Código de Ética Médica e as normativas do CFM.</p>
+      </div>
+      <div class="princ fi d2">
+        <div class="pi"><svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+        <h3>Sigilo e privacidade</h3>
+        <p>Informações protegidas pelo sigilo médico e pela LGPD, sem qualquer exceção.</p>
+      </div>
+      <div class="princ fi d3">
+        <div class="pi"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+        <h3>Rigor clínico</h3>
+        <p>Cada decisão é baseada em critérios técnicos e científicos da medicina.</p>
+      </div>
+      <div class="princ fi d4">
+        <div class="pi"><svg viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+        <h3>Respeito ao paciente</h3>
+        <p>O bem-estar e a dignidade de cada paciente são a nossa prioridade absoluta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="dep">
+  <div class="container">
+    <div class="sh c fi">
+      <span class="slabel">Depoimentos</span>
+      <h2>O que dizem nossos pacientes</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card fi d1">
+        <p class="dep-txt">Precisava de atestado para o trabalho e o atendimento foi completamente profissional. O médico me avaliou com cuidado e o documento chegou no mesmo dia.</p>
+        <div class="dep-author">
+          <div class="dep-av">R</div>
+          <div class="dep-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Ricardo M.</strong><span>Paciente verificado</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card fi d2">
+        <p class="dep-txt">Fui bem orientado durante a consulta. O médico foi atencioso, avaliou minha situação com responsabilidade e o atestado foi enviado rapidamente.</p>
+        <div class="dep-author">
+          <div class="dep-av">C</div>
+          <div class="dep-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Camila S.</strong><span>Paciente verificada</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card fi d3">
+        <p class="dep-txt">Serviço sério e confiável. O médico fez uma avaliação real antes de emitir o atestado. Senti que estava sendo atendida de verdade, com responsabilidade.</p>
+        <div class="dep-author">
+          <div class="dep-av">F</div>
+          <div class="dep-info">
+            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <strong>Fernanda L.</strong><span>Paciente verificada</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="fi">
+      <span class="slabel" style="color:rgba(255,255,255,.4)">Fale Conosco</span>
+      <h2>Precisa de um atestado médico?</h2>
+      <p class="sub">Entre em contato agora. Um médico habilitado irá avaliar sua situação de forma individual, ética e sigilosa.</p>
+      <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="btn-white">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+        Falar com um médico
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="sh c fi">
+      <span class="slabel">Dúvidas Frequentes</span>
+      <h2>Perguntas sobre o atestado médico online</h2>
+    </div>
+    <div class="faq-list fi">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">O atestado emitido online tem validade legal?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">Sim. O atestado emitido por médico com CRM ativo, após avaliação clínica, possui plena validade legal para fins trabalhistas, escolares e demais finalidades previstas em lei. A telemedicina é regulamentada pelo Conselho Federal de Medicina no Brasil.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Quais tipos de atestado são emitidos?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">São emitidos atestados para trabalho, escola, acompanhante de paciente e declarações médicas diversas. Em todos os casos, a emissão depende de avaliação clínica e indicação médica. O tipo de documento é determinado pelo médico conforme a situação apresentada.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">O atestado é garantido após o contato?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">Não. A emissão depende de avaliação médica e da existência de indicação clínica que a justifique. Não há garantia prévia de emissão de documentos. A decisão é exclusivamente do médico, com base em critérios técnicos e éticos da medicina.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Como recebo o atestado após a consulta?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">Quando há indicação clínica, o atestado é emitido digitalmente e enviado ao paciente com segurança. O documento contém todos os dados necessários para sua validade: nome do médico, CRM, data e assinatura.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Minhas informações são protegidas?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">Sim. Todas as informações são protegidas pelo sigilo médico e tratadas em conformidade com a LGPD. Os dados do paciente jamais são compartilhados com terceiros.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Como funciona a consulta pelo WhatsApp?<div class="faq-tog"><svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a">O paciente descreve sua situação e o médico conduz a avaliação clínica por mensagem ou videochamada, conforme necessário. Toda a comunicação é tratada com sigilo e profissionalismo, seguindo os protocolos de telemedicina do CFM.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="46" height="46" rx="13" fill="rgba(255,255,255,0.08)"/>
+            <rect x="11" y="9" width="20" height="27" rx="3" fill="none" stroke="white" stroke-width="1.7"/>
+            <line x1="15" y1="16" x2="27" y2="16" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="15" y1="20.5" x2="27" y2="20.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="15" y1="25" x2="21" y2="25" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="32" cy="32" r="9.5" fill="#3b82c4"/>
+            <path d="M32 27v10M27 32h10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <div class="logo-wordmark">
+            <span class="logo-name" style="color:#fff">Med<span>Doc</span> Online</span>
+            <span class="logo-sub" style="color:rgba(255,255,255,.35)">Atestado Médico Digital</span>
+          </div>
+        </a>
+        <p>Atendimento médico online e emissão de atestados conforme as diretrizes de telemedicina do Conselho Federal de Medicina.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Sobre a Clínica</a></li>
+          <li><a href="#atestado">Atestado Médico</a></li>
+          <li><a href="#como">Como Funciona</a></li>
+          <li><a href="#principios">Nossos Princípios</a></li>
+          <li><a href="#faq">Dúvidas Frequentes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li>
+            <a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="wa-pill">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              WhatsApp
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 MedDoc Online. Atendimento conforme diretrizes de telemedicina do CFM.</p>
+      <p>Atestado emitido somente após avaliação médica individual.</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/message/PFEMOMGMH5J2M1" target="_blank" class="float-wa" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.518A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+</a>
+
+<script>
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('v'); obs.unobserve(x.target); } });
+}, {threshold: 0.1});
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 2px 24px rgba(0,0,0,0.09)' : 'none';
+});
+</script>
+</body>
+</html>
